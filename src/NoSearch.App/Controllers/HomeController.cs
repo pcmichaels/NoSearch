@@ -49,9 +49,8 @@ namespace NoSearch.App.Controllers
             mainViewModel.SearchViewModel = searchViewModel;
             return View(mainViewModel);
         }
-
-        [Authorize]
-        public IActionResult Privacy()
+        
+        public IActionResult SubmitNew()
         {
             return View();
         }
