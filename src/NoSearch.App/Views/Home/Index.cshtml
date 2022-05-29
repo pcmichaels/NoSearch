@@ -1,0 +1,46 @@
+﻿@model MainViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    @using (Html.BeginForm())  
+    {  
+        @Html.Label("Search:")  
+        @Html.TextBox("SearchText")  
+
+        <div>
+            <input type="submit" value="Submit" class="btn-primary" />  
+
+        </div>
+    }
+
+<div class="text-center">
+    @if (Model.SearchViewModel.Resources != null)
+    {
+        <table>
+        @foreach (var searchResult in Model
+                      .SearchViewModel.Resources.OrderBy(a => a.Rank))
+        {
+            <tr>
+                <td>
+                    <div>
+                        @searchResult.Name
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @searchResult.Description
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @searchResult.Uri
+                    </div>
+                </td>
+
+            </tr>
+        }
+        </table>
+    }
+</div>
