@@ -5,10 +5,10 @@
 }
 
     @using (Html.BeginForm())  
-    {  
-        @Html.Label("Search:")  
-        @Html.TextBox("SearchText")  
-
+    {         
+        @Html.LabelFor(a => a.SearchViewModel.SearchTerm, new {@class = "form-label"})  
+        @Html.TextBoxFor(a => a.SearchViewModel.SearchTerm, new {@class = "form-control"})          
+       
         <div>
             <input type="submit" value="Submit" class="btn-primary" />  
 
@@ -18,7 +18,7 @@
 <div class="text-center">
     @if (Model.SearchViewModel.Resources != null)
     {
-        <table>
+        <table class="table table-striped">
         @foreach (var searchResult in Model
                       .SearchViewModel.Resources.OrderBy(a => a.Rank))
         {

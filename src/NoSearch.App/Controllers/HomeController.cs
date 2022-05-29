@@ -31,8 +31,10 @@ namespace NoSearch.App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string searchText)
+        public IActionResult Index(MainViewModel mainViewModel)
         {
+            string searchText = mainViewModel.SearchViewModel.SearchTerm;
+
             var resources = _resourceDataAccess
                 .GetAllResources()
                 .Where(a => a.Name.Contains(searchText) ||
@@ -44,11 +46,7 @@ namespace NoSearch.App.Controllers
                 Resources = resources.ToList()
             };
 
-            var mainViewModel = new MainViewModel()
-            {
-                SearchViewModel = searchViewModel
-            };
-
+            mainViewModel.SearchViewModel = searchViewModel;
             return View(mainViewModel);
         }
 
