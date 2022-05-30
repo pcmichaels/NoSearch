@@ -16,6 +16,8 @@ builder.Services.AddControllersWithViews();// options =>
 builder.Services.AddRazorPages()
     .AddMicrosoftIdentityUI();
 
+builder.Services.AddApplicationInsightsTelemetry();
+
 builder.Services.AddScoped<IResourceDataAccess, ResourceDataAccess>();
 
 var app = builder.Build();
