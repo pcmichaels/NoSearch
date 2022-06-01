@@ -14,6 +14,11 @@ namespace NoSearch.App.Search
 
         public IEnumerable<Resource> SearchResources(string searchText, bool isCasesSensitive)
         {
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                return Enumerable.Empty<Resource>();
+            }
+
             var resources = _resourceDataAccess
                 .GetAllResources()
                 .Where(a => a.Name.Contains(searchText, isCasesSensitive ? 
