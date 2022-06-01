@@ -10,4 +10,10 @@
     <ProjectReference Include="..\NoSearch.Models\NoSearch.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\ResourceList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

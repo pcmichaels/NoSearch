@@ -1,4 +1,6 @@
 ﻿using NoSearch.Models;
+using System.Reflection;
+using System.Text.Json;
 
 namespace NoSearch.Data
 {
@@ -6,12 +8,16 @@ namespace NoSearch.Data
     {
         public IEnumerable<Resource> GetAllResources()
         {
-            return new List<Resource>()
+            string executingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            string jsonData = File.ReadAllText($"{executingDir}/Data/ResourceList.json");
+            var resources = JsonSerializer.Deserialize<IEnumerable<Resource>>(jsonData);
+
+            if (resources == null)
             {
-                new Resource("Excalidraw", "Online diagramming", "https://excalidraw.com/"),
-                new Resource("Hacker News", "Tech News", "https://news.ycombinator.com/"),
-                new Resource("Stack Overflow", "Online Q&A site for programmers", "https://stackoverflow.com/")
-            };
+                throw new Exception("No data file found");
+            }
+
+            return resources;
         }
     }
 }
