@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NoSearch.App.Models;
+using NoSearch.App.Search;
 using NoSearch.Data;
 using System.Diagnostics;
 
@@ -10,13 +11,13 @@ namespace NoSearch.App.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IResourceDataAccess _resourceDataAccess;
+        private readonly ISearchService _searchService;
 
         public HomeController(ILogger<HomeController> logger,
-            IResourceDataAccess resourceDataAccess)
+            ISearchService searchService)
         {
             _logger = logger;
-            _resourceDataAccess = resourceDataAccess;
+            _searchService = searchService;
         }
 
         public IActionResult Index()
@@ -34,11 +35,8 @@ namespace NoSearch.App.Controllers
         public IActionResult Index(MainViewModel mainViewModel)
         {
             string searchText = mainViewModel.SearchViewModel.SearchTerm;
-
-            var resources = _resourceDataAccess
-                .GetAllResources()
-                .Where(a => a.Name.Contains(searchText) ||
-                    a.Description.Contains(searchText));
+            
+            var resources = _searchService.SearchResources(searchText, false);
 
             var searchViewModel = new SearchViewModel()
             {

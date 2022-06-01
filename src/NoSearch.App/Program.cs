@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using NoSearch.App.Search;
 using NoSearch.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,7 @@ builder.Services.AddRazorPages()
 builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Services.AddScoped<IResourceDataAccess, ResourceDataAccess>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 var app = builder.Build();
 
