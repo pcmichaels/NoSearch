@@ -10,5 +10,6 @@ namespace NoSearch.Data
     public interface IResourceDataAccess
     {
         IEnumerable<Resource> GetAllResources();
+        void AddResource(Resource resource);
     }
 }

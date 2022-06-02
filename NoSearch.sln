@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoSearch.Data", "src\NoSear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoSearch.Models", "src\NoSearch.Models\NoSearch.Models.csproj", "{F853C3E9-62F2-4F0D-88AB-366B918BC7DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoSearch.Tests", "test\NoSearch.Tests\NoSearch.Tests.csproj", "{30D54FA6-F4D5-443C-972C-937EAA6819D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoSearch.Tests", "test\NoSearch.Tests\NoSearch.Tests.csproj", "{30D54FA6-F4D5-443C-972C-937EAA6819D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoSearch.Common", "src\NoSearch.Common\NoSearch.Common.csproj", "{DDE479C9-3D1A-47EC-A058-E77370E94A09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{30D54FA6-F4D5-443C-972C-937EAA6819D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D54FA6-F4D5-443C-972C-937EAA6819D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D54FA6-F4D5-443C-972C-937EAA6819D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE479C9-3D1A-47EC-A058-E77370E94A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE479C9-3D1A-47EC-A058-E77370E94A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE479C9-3D1A-47EC-A058-E77370E94A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE479C9-3D1A-47EC-A058-E77370E94A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

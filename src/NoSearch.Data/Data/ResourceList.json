@@ -28,6 +28,11 @@
     "Description": "Build UI Components and Pages",
     "Uri": "https://storybook.js.org/",
     "Tags": [ "Programming" ]
+  },
+  {
+    "Name": "Paul Michaels' Blog",
+    "Description": "The blog of Paul Michaels",
+    "Uri": "https://pmichaels.net",
+    "Tags": [ "Programming", "Blog" ]
   }
-
 ]

@@ -12,11 +12,11 @@ namespace NoSearch.App.Search
             _resourceDataAccess = resourceDataAccess;
         }
 
-        public IEnumerable<Resource> SearchResources(string searchText, bool isCasesSensitive)
+        public IEnumerable<NoSearch.Models.Resource> SearchResources(string searchText, bool isCasesSensitive)
         {
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                return Enumerable.Empty<Resource>();
+                return Enumerable.Empty<NoSearch.Models.Resource>();
             }
 
             var resources = _resourceDataAccess

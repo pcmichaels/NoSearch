@@ -53,6 +53,14 @@ namespace NoSearch.App.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult SubmitNew(SubmitNewViewModel submitNewViewModel)
+        {
+            _resourceService.AddResource();
+
+            return View(submitNewViewModel);
+        }
+
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

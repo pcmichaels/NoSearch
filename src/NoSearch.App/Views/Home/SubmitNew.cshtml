@@ -1,8 +1,20 @@
-﻿@model SubmitNewModel
+﻿@model SubmitNewViewModel
 
 <h1>Submit a new site</h1>
 
-@Html.BeginForm()
+@using (Html.BeginForm())
 {
+    @Html.LabelFor(a => a.NewResource.Name)
+    @Html.TextBoxFor(a => a.NewResource.Name, new {@class = "form-control"})
+
+    @Html.LabelFor(a => a.NewResource.Description)
+    @Html.TextBoxFor(a => a.NewResource.Description, new {@class = "form-control"})
+
+    @Html.LabelFor(a => a.NewResource.Uri)
+    @Html.TextBoxFor(a => a.NewResource.Uri, new {@class = "form-control"})
+
+    <div class="m-2 col text-center">
+        <input type="submit" value="Submit" class="btn btn-primary btn-lg" />  
+    </div>
 
 }

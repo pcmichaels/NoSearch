@@ -6,6 +6,11 @@ namespace NoSearch.Data
 {
     public class ResourceDataAccess : IResourceDataAccess
     {
+        public void AddResource(Resource resource)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Resource> GetAllResources()
         {
             string executingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
