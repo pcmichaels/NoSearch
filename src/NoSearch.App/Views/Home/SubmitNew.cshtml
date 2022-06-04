@@ -2,19 +2,28 @@
 
 <h1>Submit a new site</h1>
 
+<h2>@Model.Error</h2>
+
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(a => a.NewResource.Name)
-    @Html.TextBoxFor(a => a.NewResource.Name, new {@class = "form-control"})
-
-    @Html.LabelFor(a => a.NewResource.Description)
-    @Html.TextBoxFor(a => a.NewResource.Description, new {@class = "form-control"})
-
     @Html.LabelFor(a => a.NewResource.Uri)
     @Html.TextBoxFor(a => a.NewResource.Uri, new {@class = "form-control"})
 
     <div class="m-2 col text-center">
-        <input type="submit" value="Submit" class="btn btn-primary btn-lg" />  
+        <input type="submit" value="Lookup" class="btn btn-secondary btn-lg"
+            asp-controller="Home" asp-action="Lookup"/>  
+    </div>
+
+    @Html.LabelFor(a => a.NewResource.Name)
+    <p>@Model.NewResource?.Name</p>
+    @Html.TextBoxFor(a => a.NewResource.Name, new { @class = "form-control" })
+
+    @Html.LabelFor(a => a.NewResource.Description)
+    @Html.TextBoxFor(a => a.NewResource.Description, new {@class = "form-control"})
+
+    <div class="m-2 col text-center">
+        <input type="submit" value="SubmitNew" class="btn btn-primary btn-lg"
+            asp-controller="Home" asp-action="SubmitNew"/>  
     </div>
 
 }

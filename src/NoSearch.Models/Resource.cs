@@ -2,6 +2,8 @@
 {
     public class Resource
     {
+        public Resource() { }
+        
         public Resource(string name, 
             string description, 
             string uri)

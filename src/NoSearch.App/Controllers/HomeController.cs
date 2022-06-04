@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NoSearch.App.Models;
+using NoSearch.App.Resources;
 using NoSearch.App.Search;
 using NoSearch.Data;
 using System.Diagnostics;
@@ -12,12 +13,15 @@ namespace NoSearch.App.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ISearchService _searchService;
+        private readonly IResourceService _resourceService;
 
         public HomeController(ILogger<HomeController> logger,
-            ISearchService searchService)
+            ISearchService searchService, 
+            IResourceService resourceService)
         {
             _logger = logger;
             _searchService = searchService;
+            _resourceService = resourceService;
         }
 
         public IActionResult Index()
@@ -50,15 +54,36 @@ namespace NoSearch.App.Controllers
         
         public IActionResult SubmitNew()
         {
-            return View();
+            return View(new SubmitNewViewModel());            
         }
 
         [HttpPost]
-        public IActionResult SubmitNew(SubmitNewViewModel submitNewViewModel)
+        public async Task<IActionResult> Lookup(SubmitNewViewModel submitNewViewModel)
         {
-            _resourceService.AddResource();
+            var result = await _resourceService.FindResource(submitNewViewModel.NewResource);
+            if (!result.IsSuccess)
+            {
+                submitNewViewModel.Error = result.Errors.First();
+            }
+            else
+            {
+                ModelState.Clear();
+                submitNewViewModel.NewResource = result.Data;
+            }
 
-            return View(submitNewViewModel);
+            return View("SubmitNew", submitNewViewModel);
+        }
+
+        [HttpPost]        
+        public async Task<IActionResult> SubmitNew(SubmitNewViewModel submitNewViewModel)
+        {
+            var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
+            if (!result.IsSuccess)
+            {
+                submitNewViewModel.Error = result.Errors.First();
+            }
+
+            return View("SubmitNew", submitNewViewModel);
         }
 
         [AllowAnonymous]

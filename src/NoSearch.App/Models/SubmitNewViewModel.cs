@@ -6,5 +6,6 @@ namespace NoSearch.App.Models
     {
         public NoSearch.Models.Resource NewResource { get; set; }
         public bool IsValidated { get; set; }
+        public string Error { get; set; }
     }
 }
