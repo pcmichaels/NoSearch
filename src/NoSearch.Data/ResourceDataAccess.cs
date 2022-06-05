@@ -24,5 +24,20 @@ namespace NoSearch.Data
 
             return resources;
         }
+
+        public IEnumerable<Tag> GetAllTags()
+        {
+            string executingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            string jsonData = File.ReadAllText($"{executingDir}/Data/TagList.json");
+            var tags = JsonSerializer.Deserialize<IEnumerable<Tag>>(jsonData);
+
+            if (tags == null)
+            {
+                throw new Exception("No data file found");
+            }
+
+            return tags;
+        }
+
     }
 }

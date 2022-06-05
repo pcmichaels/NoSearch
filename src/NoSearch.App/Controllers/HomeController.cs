@@ -5,6 +5,7 @@ using NoSearch.App.Resources;
 using NoSearch.App.Search;
 using NoSearch.Data;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NoSearch.App.Controllers
 {
@@ -52,9 +53,15 @@ namespace NoSearch.App.Controllers
             return View(mainViewModel);
         }
         
-        public IActionResult SubmitNew()
+        public async Task<IActionResult> SubmitNew()
         {
-            return View(new SubmitNewViewModel());            
+            var tags = await _resourceService.GetAllTags();
+            var viewModel = new SubmitNewViewModel()
+            {
+                AllTags = tags.Data.Select(a => a.Name)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -69,6 +76,13 @@ namespace NoSearch.App.Controllers
             {
                 ModelState.Clear();
                 submitNewViewModel.NewResource = result.Data;
+
+                if (!(submitNewViewModel?.AllTags?.Any() ?? false))
+                {
+                    var tags = await _resourceService.GetAllTags();
+                    if (tags.IsSuccess)
+                        submitNewViewModel.AllTags = tags.Data.Select(a => a.Name);
+                }
             }
 
             return View("SubmitNew", submitNewViewModel);

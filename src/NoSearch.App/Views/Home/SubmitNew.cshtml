@@ -7,7 +7,7 @@
 @using (Html.BeginForm())
 {
     @Html.LabelFor(a => a.NewResource.Uri)
-    @Html.TextBoxFor(a => a.NewResource.Uri, new {@class = "form-control"})
+    @Html.TextBoxFor(a => a.NewResource.Uri, new { @class = "form-control" })
 
     <div class="m-2 col text-center">
         <input type="submit" value="Lookup" class="btn btn-secondary btn-lg"
@@ -19,7 +19,12 @@
     @Html.TextBoxFor(a => a.NewResource.Name, new { @class = "form-control" })
 
     @Html.LabelFor(a => a.NewResource.Description)
-    @Html.TextBoxFor(a => a.NewResource.Description, new {@class = "form-control"})
+    @Html.TextBoxFor(a => a.NewResource.Description, new { @class = "form-control" })
+
+    @Html.LabelFor(a => a.NewResource.Tags);
+    @Html.DropDownListFor(a => a.NewResource.Tags, 
+        new SelectList(Model.AllTags),
+        new { @class = "form-control" });
 
     <div class="m-2 col text-center">
         <input type="submit" value="SubmitNew" class="btn btn-primary btn-lg"

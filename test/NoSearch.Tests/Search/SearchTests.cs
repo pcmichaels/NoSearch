@@ -4,7 +4,7 @@ using NoSearch.Data;
 using NoSearch.Models;
 using Xunit;
 
-namespace NoSearch.Tests
+namespace NoSearch.Tests.Search
 {
     public class SearchTests
     {

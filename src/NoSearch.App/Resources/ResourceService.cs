@@ -53,5 +53,12 @@ namespace NoSearch.App.Resources
 
             return Result<NoSearch.Models.Resource>.Success(resource);
         }
+
+        public Task<Result<IEnumerable<Tag>>> GetAllTags()
+        {
+            var tags = _resourceDataAccess.GetAllTags();
+            var result = Result<IEnumerable<Tag>>.Success(tags);
+            return Task.FromResult(result);
+        }
     }
 }
