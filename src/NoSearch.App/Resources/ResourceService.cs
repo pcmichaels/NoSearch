@@ -1,7 +1,6 @@
 ﻿using NoSearch.Common;
 using NoSearch.Data;
 using NoSearch.Models;
-using System.ComponentModel.Design;
 using WebSiteMeta.Scraper;
 
 namespace NoSearch.App.Resources
@@ -18,46 +17,46 @@ namespace NoSearch.App.Resources
             _findMetaData = findMetaData;
         }
 
-        public async Task<Result<NoSearch.Models.Resource>> AddResource(NoSearch.Models.Resource resource)
+        public async Task<DataResult<NoSearch.Models.Resource>> AddResource(NoSearch.Models.Resource resource)
         {
             string cleanUrl = _findMetaData.CleanUrl(resource.Uri);
             bool isValid = _findMetaData.ValidateUrl(cleanUrl);
             if (!isValid)
             {
-                return Result<Resource>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
+                return DataResult<Resource>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
             }
 
             _resourceDataAccess.AddResource(resource);
 
-            return Result<NoSearch.Models.Resource>.Success(resource);
+            return DataResult<NoSearch.Models.Resource>.Success(resource);
         }
 
-        public async Task<Result<Resource>> FindResource(Resource resource)
+        public async Task<DataResult<Resource>> FindResource(Resource resource)
         {
             string cleanUrl = _findMetaData.CleanUrl(resource.Uri);
             bool isValid = _findMetaData.ValidateUrl(cleanUrl);
             if (!isValid)
             {
-                return Result<Resource>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
+                return DataResult<Resource>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
             }
 
             var data = await _findMetaData.Run(cleanUrl);
             if (!data.IsSuccess)
             {
-                return Result<Resource>.Fail($"Invalid URL provided: {resource.Uri}");
+                return DataResult<Resource>.Fail($"Invalid URL provided: {resource.Uri}");
             }
 
             resource.Name = resource.Name ?? data.Metadata.Title;
             resource.Description = resource.Description ?? data.Metadata.Description;
             resource.Uri = data.Metadata.Url;
 
-            return Result<NoSearch.Models.Resource>.Success(resource);
+            return DataResult<NoSearch.Models.Resource>.Success(resource);
         }
 
-        public Task<Result<IEnumerable<Tag>>> GetAllTags()
+        public Task<DataResult<IEnumerable<Tag>>> GetAllTags()
         {
             var tags = _resourceDataAccess.GetAllTags();
-            var result = Result<IEnumerable<Tag>>.Success(tags);
+            var result = DataResult<IEnumerable<Tag>>.Success(tags);
             return Task.FromResult(result);
         }
     }

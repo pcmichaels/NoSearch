@@ -15,14 +15,17 @@ namespace NoSearch.App.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ISearchService _searchService;
         private readonly IResourceService _resourceService;
+        private readonly IValidationService _validationService;
 
         public HomeController(ILogger<HomeController> logger,
             ISearchService searchService, 
-            IResourceService resourceService)
+            IResourceService resourceService,
+            IValidationService validationService)
         {
             _logger = logger;
             _searchService = searchService;
             _resourceService = resourceService;
+            _validationService = validationService;
         }
 
         public IActionResult Index()
@@ -91,6 +94,12 @@ namespace NoSearch.App.Controllers
         [HttpPost]        
         public async Task<IActionResult> SubmitNew(SubmitNewViewModel submitNewViewModel)
         {
+            var validationResult = _validationService.ValidateResource(submitNewViewModel.NewResource);
+            if (!validationResult.IsSuccess)
+            {
+                submitNewViewModel.Error = validationResult.Errors.First();
+            }
+
             var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
             if (!result.IsSuccess)
             {

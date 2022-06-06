@@ -24,12 +24,13 @@ namespace NoSearch.Tests.SubmitNewResource
             // Arrange
             var logger = new Mock<ILogger<HomeController>>();
             var searchService = new Mock<ISearchService>();
-            var resourceService = new Mock<IResourceService>();
+            var resourceService = new Mock<IResourceService>();            
             resourceService.Setup(a => a.FindResource(It.IsAny<Resource>())).ReturnsAsync(
-                Result<Resource>.Success(new Resource() { Name = "Test" }));
+                DataResult<Resource>.Success(new Resource() { Name = "Test" }));
+            var validationService = new Mock<IValidationService>();
 
             var controller = new HomeController(logger.Object, 
-                searchService.Object, resourceService.Object);
+                searchService.Object, resourceService.Object, validationService.Object);
 
             var submitNewViewModel = new SubmitNewViewModel()
             {
@@ -55,16 +56,18 @@ namespace NoSearch.Tests.SubmitNewResource
             var searchService = new Mock<ISearchService>();
             var resourceService = new Mock<IResourceService>();
             resourceService.Setup(a => a.FindResource(It.IsAny<Resource>())).ReturnsAsync(
-                Result<Resource>.Success(new Resource() { Name = "Test" }));
+                DataResult<Resource>.Success(new Resource() { Name = "Test" }));
             resourceService.Setup(a => a.GetAllTags()).ReturnsAsync(
-                Result<IEnumerable<Tag>>.Success(new List<Tag>() 
+                DataResult<IEnumerable<Tag>>.Success(new List<Tag>() 
                 { 
                     new Tag() { Name = "Tag1" },
                     new Tag() { Name = "Tag2" },
                 }));
+            var validationService = new Mock<IValidationService>();
 
             var controller = new HomeController(logger.Object,
-                searchService.Object, resourceService.Object);
+                searchService.Object, resourceService.Object,
+                validationService.Object);
 
             var submitNewViewModel = new SubmitNewViewModel()
             {
@@ -81,6 +84,5 @@ namespace NoSearch.Tests.SubmitNewResource
             Assert.Equal(2, resultModel.AllTags.Count());
             Assert.Equal("Test", resultModel.NewResource.Name);
         }
-
     }
 }
