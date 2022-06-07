@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using NoSearch.App.Resources;
 using NoSearch.App.Search;
 using NoSearch.Data;
 using Scrutor;
@@ -32,8 +33,6 @@ builder.Services.AddRazorPages()
 
 builder.Services.AddApplicationInsightsTelemetry();
 
-//builder.Services.AddScoped<IResourceDataAccess, ResourceDataAccess>();
-//builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.Scan(scan => scan
     .FromCallingAssembly()
         .AddClasses(true)

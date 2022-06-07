@@ -17,6 +17,6 @@
         public string Description { get; set; }
         public int? Rank { get; set; }
         public string Uri { get; set; }
-        public List<Tag> Tags { get; set; }
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

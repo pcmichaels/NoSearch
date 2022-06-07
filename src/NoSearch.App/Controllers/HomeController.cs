@@ -80,15 +80,20 @@ namespace NoSearch.App.Controllers
                 ModelState.Clear();
                 submitNewViewModel.NewResource = result.Data;
 
-                if (!(submitNewViewModel?.AllTags?.Any() ?? false))
-                {
-                    var tags = await _resourceService.GetAllTags();
-                    if (tags.IsSuccess)
-                        submitNewViewModel.AllTags = tags.Data.Select(a => a.Name);
-                }
+                await UpdateTags(submitNewViewModel);
             }
 
             return View("SubmitNew", submitNewViewModel);
+        }
+
+        private async Task UpdateTags(SubmitNewViewModel submitNewViewModel)
+        {
+            if (!(submitNewViewModel?.AllTags?.Any() ?? false))
+            {
+                var tags = await _resourceService.GetAllTags();
+                if (tags.IsSuccess)
+                    submitNewViewModel.AllTags = tags.Data.Select(a => a.Name);
+            }
         }
 
         [HttpPost]        
@@ -99,12 +104,15 @@ namespace NoSearch.App.Controllers
             {
                 submitNewViewModel.Error = validationResult.Errors.First();
             }
-
-            var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
-            if (!result.IsSuccess)
+            else
             {
-                submitNewViewModel.Error = result.Errors.First();
+                var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
+                if (!result.IsSuccess)
+                {
+                    submitNewViewModel.Error = result.Errors.First();
+                } 
             }
+            await UpdateTags(submitNewViewModel);
 
             return View("SubmitNew", submitNewViewModel);
         }

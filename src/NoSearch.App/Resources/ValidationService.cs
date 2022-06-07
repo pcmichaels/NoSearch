@@ -1,21 +1,28 @@
 ﻿using NoSearch.Common;
+using NoSearch.Data;
 using NoSearch.Models;
 
 namespace NoSearch.App.Resources
 {
     public class ValidationService : IValidationService
     {
-        public IEnumerable<string> BlockedWords { get; set; }
-
-        public ValidationService(IEnumerable<string> blockedWords)
-        {
-            BlockedWords = blockedWords;
+        private readonly IRestrictedWordsDataAccess _restrictedWordsDataAccess;
+        private IEnumerable<string> _blockedWords;
+       
+        public ValidationService(IRestrictedWordsDataAccess restrictedWordsDataAccess)
+        {            
+            _restrictedWordsDataAccess = restrictedWordsDataAccess;
         }
 
         public Result ValidateResource(Resource resource)
         {
-            if (BlockedWords.Any(a => resource.Name.Contains(a, StringComparison.OrdinalIgnoreCase))
-                || BlockedWords.Any(a => resource.Description.Contains(a, StringComparison.OrdinalIgnoreCase)))
+            if (_blockedWords == null)
+            {
+                _blockedWords = _restrictedWordsDataAccess.GetAll();
+            }
+
+            if (_blockedWords.Any(a => resource.Name.Contains(a, StringComparison.OrdinalIgnoreCase))
+                || _blockedWords.Any(a => resource.Description.Contains(a, StringComparison.OrdinalIgnoreCase)))
             {
                 return Result.Fail("Unacceptable Name or Description");
             }

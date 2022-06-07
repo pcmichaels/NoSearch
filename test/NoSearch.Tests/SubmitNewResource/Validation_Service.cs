@@ -1,4 +1,6 @@
-﻿using NoSearch.App.Resources;
+﻿using Moq;
+using NoSearch.App.Resources;
+using NoSearch.Data;
 using NoSearch.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,10 @@ namespace NoSearch.Tests.SubmitNewResource
         public void Validation_BadLanguage_ValidlyRejects(string name, string description, bool shouldSucceed)
         {
             // Arrange
-            var validationService = new ValidationService(new[] { "badword1", "BadWord2" });
+            var restrictedWordsDataAccess = new Mock<IRestrictedWordsDataAccess>();
+            restrictedWordsDataAccess.Setup(a => a.GetAll()).Returns(
+                new[] { "badword1", "BadWord2" });
+            var validationService = new ValidationService(restrictedWordsDataAccess.Object);
             var resource = new Resource()
             {
                 Name = name,
