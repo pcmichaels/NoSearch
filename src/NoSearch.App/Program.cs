@@ -1,16 +1,10 @@
-using Azure.Identity;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
-using NoSearch.App.Resources;
-using NoSearch.App.Search;
-using NoSearch.Data;
-using Scrutor;
+using NoSearch.Data.Resources;
 using WebSiteMeta.Scraper;
 using WebSiteMeta.Scraper.HttpClientWrapper;
+using NoSearch.Data.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +45,9 @@ builder.Services.AddScoped<IFindMetaData, FindMetaData>(a =>
     return new FindMetaData(wrapper);
 });
 
+builder.Services.ConfigureServices(
+    builder.Configuration.GetConnectionString("SqlConnectionString"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -61,6 +58,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.Services.UpdateDatabase();
+    
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -75,3 +74,4 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+

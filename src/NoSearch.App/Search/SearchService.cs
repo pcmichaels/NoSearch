@@ -1,5 +1,4 @@
-﻿using NoSearch.Data;
-using NoSearch.Models;
+﻿using NoSearch.Data.Resources;
 
 namespace NoSearch.App.Search
 {
@@ -12,17 +11,17 @@ namespace NoSearch.App.Search
             _resourceDataAccess = resourceDataAccess;
         }
 
-        public IEnumerable<NoSearch.Models.Resource> SearchResources(string searchText, bool isCasesSensitive)
+        public IEnumerable<NoSearch.Models.ResourceModel> SearchResources(string searchText, bool isCasesSensitive)
         {
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                return Enumerable.Empty<NoSearch.Models.Resource>();
+                return Enumerable.Empty<NoSearch.Models.ResourceModel>();
             }
 
             var resources = _resourceDataAccess
                 .GetAllResources()
-                .Where(a => a.Name.Contains(searchText, isCasesSensitive ? 
-                        StringComparison.InvariantCulture :        
+                .Where(a => a.Name.Contains(searchText, isCasesSensitive ?
+                        StringComparison.InvariantCulture :
                         StringComparison.InvariantCultureIgnoreCase) ||
                     a.Description.Contains(searchText, isCasesSensitive ?
                         StringComparison.InvariantCulture :

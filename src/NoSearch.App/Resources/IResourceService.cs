@@ -5,8 +5,8 @@ namespace NoSearch.App.Resources
 {
     public interface IResourceService
     {
-        Task<DataResult<Resource>> AddResource(Resource resource);
-        Task<DataResult<Resource>> FindResource(Resource newResource);
-        Task<DataResult<IEnumerable<Tag>>> GetAllTags();
+        Task<DataResult<ResourceModel>> AddResource(ResourceModel resource);
+        Task<DataResult<ResourceModel>> FindResource(ResourceModel newResource);
+        Task<DataResult<IEnumerable<TagModel>>> GetAllTags();
     }
 }

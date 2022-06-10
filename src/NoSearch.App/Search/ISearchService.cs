@@ -4,6 +4,6 @@ namespace NoSearch.App.Search
 {
     public interface ISearchService
     {
-        IEnumerable<Resource> SearchResources(string searchText, bool isCasesSensitive);
+        IEnumerable<ResourceModel> SearchResources(string searchText, bool isCasesSensitive);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NoSearch.App.Resources;
-using NoSearch.Data;
+using NoSearch.Data.Validation;
 using NoSearch.Models;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace NoSearch.Tests.SubmitNewResource
             restrictedWordsDataAccess.Setup(a => a.GetAll()).Returns(
                 new[] { "badword1", "BadWord2" });
             var validationService = new ValidationService(restrictedWordsDataAccess.Object);
-            var resource = new Resource()
+            var resource = new ResourceModel()
             {
                 Name = name,
                 Description = description

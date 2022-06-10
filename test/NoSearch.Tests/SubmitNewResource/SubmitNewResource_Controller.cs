@@ -25,8 +25,8 @@ namespace NoSearch.Tests.SubmitNewResource
             var logger = new Mock<ILogger<HomeController>>();
             var searchService = new Mock<ISearchService>();
             var resourceService = new Mock<IResourceService>();            
-            resourceService.Setup(a => a.FindResource(It.IsAny<Resource>())).ReturnsAsync(
-                DataResult<Resource>.Success(new Resource() { Name = "Test" }));
+            resourceService.Setup(a => a.FindResource(It.IsAny<ResourceModel>())).ReturnsAsync(
+                DataResult<ResourceModel>.Success(new ResourceModel() { Name = "Test" }));
             var validationService = new Mock<IValidationService>();
 
             var controller = new HomeController(logger.Object, 
@@ -55,13 +55,13 @@ namespace NoSearch.Tests.SubmitNewResource
             var logger = new Mock<ILogger<HomeController>>();
             var searchService = new Mock<ISearchService>();
             var resourceService = new Mock<IResourceService>();
-            resourceService.Setup(a => a.FindResource(It.IsAny<Resource>())).ReturnsAsync(
-                DataResult<Resource>.Success(new Resource() { Name = "Test" }));
+            resourceService.Setup(a => a.FindResource(It.IsAny<ResourceModel>())).ReturnsAsync(
+                DataResult<ResourceModel>.Success(new ResourceModel() { Name = "Test" }));
             resourceService.Setup(a => a.GetAllTags()).ReturnsAsync(
-                DataResult<IEnumerable<Tag>>.Success(new List<Tag>() 
+                DataResult<IEnumerable<TagModel>>.Success(new List<TagModel>() 
                 { 
-                    new Tag() { Name = "Tag1" },
-                    new Tag() { Name = "Tag2" },
+                    new TagModel() { Name = "Tag1" },
+                    new TagModel() { Name = "Tag2" },
                 }));
             var validationService = new Mock<IValidationService>();
 

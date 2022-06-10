@@ -1,5 +1,5 @@
 ﻿using NoSearch.Common;
-using NoSearch.Data;
+using NoSearch.Data.Validation;
 using NoSearch.Models;
 
 namespace NoSearch.App.Resources
@@ -8,13 +8,13 @@ namespace NoSearch.App.Resources
     {
         private readonly IRestrictedWordsDataAccess _restrictedWordsDataAccess;
         private IEnumerable<string> _blockedWords;
-       
+
         public ValidationService(IRestrictedWordsDataAccess restrictedWordsDataAccess)
-        {            
+        {
             _restrictedWordsDataAccess = restrictedWordsDataAccess;
         }
 
-        public Result ValidateResource(Resource resource)
+        public Result ValidateResource(ResourceModel resource)
         {
             if (_blockedWords == null)
             {

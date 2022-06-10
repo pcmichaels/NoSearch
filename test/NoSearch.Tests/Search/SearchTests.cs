@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NoSearch.App.Search;
-using NoSearch.Data;
+using NoSearch.Data.Resources;
 using NoSearch.Models;
 using Xunit;
 
@@ -14,12 +14,12 @@ namespace NoSearch.Tests.Search
             // Arrange
             var resourceDataAccess = new Mock<IResourceDataAccess>();
             resourceDataAccess.Setup(a => a.GetAllResources()).Returns(
-                new List<Resource>()
+                new List<ResourceModel>()
                 {
-                    new Resource() { Name = "abc", Description = "abc" },
-                    new Resource() { Name = "test", Description = "abc" },
-                    new Resource() { Name = "abc", Description = "testing" },
-                    new Resource() { Name = "aaa", Description = "bbb" }
+                    new ResourceModel() { Name = "abc", Description = "abc" },
+                    new ResourceModel() { Name = "test", Description = "abc" },
+                    new ResourceModel() { Name = "abc", Description = "testing" },
+                    new ResourceModel() { Name = "aaa", Description = "bbb" }
                 });
             var searchService = new SearchService(resourceDataAccess.Object);
 

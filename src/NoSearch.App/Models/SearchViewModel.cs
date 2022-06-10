@@ -7,6 +7,6 @@ namespace NoSearch.App.Models
     {
         [DisplayName("Search")]
         public string SearchTerm { get; set; }
-        public IReadOnlyList<Resource> Resources { get; set; }
+        public IReadOnlyList<ResourceModel> Resources { get; set; }
     }
 }

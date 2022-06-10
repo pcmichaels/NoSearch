@@ -5,6 +5,6 @@ namespace NoSearch.App.Resources
 {
     public interface IValidationService
     {
-        Result ValidateResource(Resource resource);
+        Result ValidateResource(ResourceModel resource);
     }
 }

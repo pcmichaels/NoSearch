@@ -3,13 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using NoSearch.App.Models;
 using NoSearch.App.Resources;
 using NoSearch.App.Search;
-using NoSearch.Data;
 using System.Diagnostics;
-using System.Linq;
 
 namespace NoSearch.App.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,7 +16,7 @@ namespace NoSearch.App.Controllers
         private readonly IValidationService _validationService;
 
         public HomeController(ILogger<HomeController> logger,
-            ISearchService searchService, 
+            ISearchService searchService,
             IResourceService resourceService,
             IValidationService validationService)
         {
@@ -43,7 +41,7 @@ namespace NoSearch.App.Controllers
         public IActionResult Index(MainViewModel mainViewModel)
         {
             string searchText = mainViewModel.SearchViewModel.SearchTerm;
-            
+
             var resources = _searchService.SearchResources(searchText, false);
 
             var searchViewModel = new SearchViewModel()
@@ -55,7 +53,7 @@ namespace NoSearch.App.Controllers
             mainViewModel.SearchViewModel = searchViewModel;
             return View(mainViewModel);
         }
-        
+
         public async Task<IActionResult> SubmitNew()
         {
             var tags = await _resourceService.GetAllTags();
@@ -96,7 +94,7 @@ namespace NoSearch.App.Controllers
             }
         }
 
-        [HttpPost]        
+        [HttpPost]
         public async Task<IActionResult> SubmitNew(SubmitNewViewModel submitNewViewModel)
         {
             var validationResult = _validationService.ValidateResource(submitNewViewModel.NewResource);
@@ -110,7 +108,7 @@ namespace NoSearch.App.Controllers
                 if (!result.IsSuccess)
                 {
                     submitNewViewModel.Error = result.Errors.First();
-                } 
+                }
             }
             await UpdateTags(submitNewViewModel);
 
