@@ -1,9 +1,4 @@
 ﻿using NoSearch.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoSearch.Data.Resources
 {
@@ -11,6 +6,6 @@ namespace NoSearch.Data.Resources
     {
         IEnumerable<TagModel> GetAllTags();
         IEnumerable<ResourceModel> GetAllResources();
-        void AddResource(ResourceModel resource);
+        Task AddResource(ResourceModel resource);
     }
 }

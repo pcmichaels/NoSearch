@@ -1,13 +1,12 @@
 ﻿using NoSearch.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoSearch.Data.Resources
 {
     public class Resource : ResourceModel
     {
+        public Resource(string name, string description, string uri) : base(name, description, uri)
+        {
+
+        }
     }
 }

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using NoSearch.Data.DataAccess;
 using NoSearch.Data.Resources;
 using WebSiteMeta.Scraper;
 using WebSiteMeta.Scraper.HttpClientWrapper;
-using NoSearch.Data.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +59,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UpdateDatabase();
-    
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

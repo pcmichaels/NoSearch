@@ -6,7 +6,7 @@ namespace NoSearch.App.Models
     public class SearchViewModel
     {
         [DisplayName("Search")]
-        public string SearchTerm { get; set; }
-        public IReadOnlyList<ResourceModel> Resources { get; set; }
+        public string? SearchTerm { get; set; }
+        public IReadOnlyList<ResourceModel>? Resources { get; set; }
     }
 }
