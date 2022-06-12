@@ -58,7 +58,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.Services.UpdateDatabase();
+app.UpdateDatabase();
     
 app.UseHttpsRedirection();
 app.UseStaticFiles();
