@@ -12,5 +12,6 @@ namespace NoSearch.Data.DataAccess
         }
 
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 }
