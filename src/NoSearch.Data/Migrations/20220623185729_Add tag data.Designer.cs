@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NoSearch.Data.DataAccess;
 
@@ -11,9 +12,10 @@ using NoSearch.Data.DataAccess;
 namespace NoSearch.Data.Migrations
 {
     [DbContext(typeof(NoSearchDbContext))]
-    partial class NoSearchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220623185729_Add tag data")]
+    partial class Addtagdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

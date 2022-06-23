@@ -60,8 +60,8 @@ namespace NoSearch.Tests.SubmitNewResource
             resourceService.Setup(a => a.GetAllTags()).ReturnsAsync(
                 DataResult<IEnumerable<TagModel>>.Success(new List<TagModel>() 
                 { 
-                    new TagModel() { Name = "Tag1" },
-                    new TagModel() { Name = "Tag2" },
+                    new TagModel("Tag1"),
+                    new TagModel("Tag2"),
                 }));
             var validationService = new Mock<IValidationService>();
 
