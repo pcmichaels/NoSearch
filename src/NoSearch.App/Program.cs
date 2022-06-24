@@ -75,3 +75,5 @@ app.MapRazorPages();
 
 app.Run();
 
+
+public partial class Program { } // so you can reference it from tests

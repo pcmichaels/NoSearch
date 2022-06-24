@@ -14,9 +14,16 @@ namespace NoSearch.Data.Resources
             _noSearchDbContext = noSearchDbContext;
         }
 
-        public void AddResource(ResourceModel resource)
+        public void AddResource(ResourceModel resourceModel)
         {
-            throw new NotImplementedException();
+            var resourceEntity = new Resource()
+            {
+                Name = resourceModel.Name,
+                Description = resourceModel.Description,
+                Rank = resourceModel.Rank,
+                Uri = resourceModel.Uri
+            };
+            _noSearchDbContext.Add(resourceEntity);
         }
 
         public IEnumerable<ResourceModel> GetAllResources()

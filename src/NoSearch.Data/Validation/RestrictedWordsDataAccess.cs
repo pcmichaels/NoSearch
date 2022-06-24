@@ -1,28 +1,25 @@
-﻿using System.Reflection;
+﻿using NoSearch.Data.DataAccess;
+using System.Reflection;
 using System.Text.Json;
 
 namespace NoSearch.Data.Validation
 {
     public class RestrictedWordsDataAccess : IRestrictedWordsDataAccess
     {
+        private readonly NoSearchDbContext _noSearchDbContext;
+
+        public RestrictedWordsDataAccess(NoSearchDbContext noSearchDbContext)
+        {
+            _noSearchDbContext = noSearchDbContext;
+        }
+
         public IEnumerable<string> GetAll()
         {
-            string executingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-            string jsonData = File.ReadAllText($"{executingDir}/Data/BadWords.json");
+            var restrictedWords = _noSearchDbContext
+                .RestrictedWords
+                .Where(a => a.Reason == 1);
 
-            var options = new JsonSerializerOptions
-            {
-                ReadCommentHandling = JsonCommentHandling.Skip
-            };
-            var restrictedWords = JsonSerializer.Deserialize<IEnumerable<string>>(
-                jsonData, options);
-
-            if (restrictedWords == null)
-            {
-                throw new Exception("No data file found");
-            }
-
-            return restrictedWords;
+            return restrictedWords.Select(a => a.Word);
         }
 
     }

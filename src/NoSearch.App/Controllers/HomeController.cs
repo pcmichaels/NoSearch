@@ -95,8 +95,10 @@ namespace NoSearch.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitNew(SubmitNewViewModel submitNewViewModel)
+        public async Task<IActionResult> SubmitNew([FromBody]SubmitNewViewModel submitNewViewModel)
         {
+            ArgumentNullException.ThrowIfNull(submitNewViewModel.NewResource);
+
             var validationResult = _validationService.ValidateResource(submitNewViewModel.NewResource);
             if (!validationResult.IsSuccess)
             {
