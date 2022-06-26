@@ -24,6 +24,7 @@ namespace NoSearch.Data.Resources
                 Uri = resourceModel.Uri
             };
             _noSearchDbContext.Add(resourceEntity);
+            _noSearchDbContext.SaveChanges();
         }
 
         public IEnumerable<ResourceModel> GetAllResources()
