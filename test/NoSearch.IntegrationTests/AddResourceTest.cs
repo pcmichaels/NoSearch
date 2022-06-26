@@ -101,9 +101,13 @@ namespace NoSearch.IntegrationTests
                 "/home/submitnew", content);
 
             // Assert
-            Assert.True(response.IsSuccessStatusCode);
-            var dbContext = appFactory.Services.GetService<NoSearchDbContext>();
-            Assert.Equal(1, dbContext.Resources.Count());
+            Assert.True(response.IsSuccessStatusCode);            
+
+            var scope = appFactory.Services.GetService<IServiceScopeFactory>()!.CreateScope();
+            var dbContext = scope.ServiceProvider.GetService<NoSearchDbContext>();
+
+            Assert.NotNull(dbContext);
+            Assert.Single(dbContext!.Resources);
         }
 
     }
