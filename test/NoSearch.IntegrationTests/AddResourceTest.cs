@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using NoSearch.App.Models;
+using NoSearch.Data.DataAccess;
 using System.Text.Json;
 using Xunit;
+using Microsoft.EntityFrameworkCore;
 
 namespace NoSearch.IntegrationTests
 {
@@ -22,7 +25,7 @@ namespace NoSearch.IntegrationTests
         }
 
         [Fact]
-        public async Task BasicAdd_SubmitNew_AddsRecord()
+        public async Task BasicAdd_SubmitNew_Succeeds()
         {
             // Arrange
             var appFactory = new WebApplicationFactory<Program>();
@@ -52,5 +55,56 @@ namespace NoSearch.IntegrationTests
             // Assert
             Assert.True(response.IsSuccessStatusCode);
         }
+
+        [Fact]
+        public async Task BasicAdd_SubmitNew_AddRecord()
+        {
+            // Arrange
+            var appFactory = new WebApplicationFactory<Program>()
+                .WithWebHostBuilder(host =>
+                {
+                    host.ConfigureServices(services =>
+                    {
+                        var descriptor = services.SingleOrDefault(
+                            d => d.ServiceType ==
+                            typeof(DbContextOptions<NoSearchDbContext>));
+
+                        services.Remove(descriptor);
+
+                        services.AddDbContext<NoSearchDbContext>(options =>
+                        {
+                            options.UseInMemoryDatabase("InMemoryDB");
+                        });
+                    });
+                });
+            var httpClient = appFactory.CreateClient();
+
+            var submitNewViewModel = new SubmitNewViewModel()
+            {
+                IsValidated = true,
+                NewResource = new Models.ResourceModel()
+                {
+                    Name = "test",
+                    Uri = "www.test.com",
+                    Description = "description"
+                }
+            };
+
+            var json = JsonSerializer.Serialize(submitNewViewModel);
+            var content = new StringContent(
+                json,
+                System.Text.Encoding.UTF8,
+                "application/json");
+
+            // Act
+            using var response = await httpClient.PostAsync(
+                "/home/submitnew", content);
+
+            // Assert
+            Assert.True(response.IsSuccessStatusCode);
+            var dbContext = appFactory.Services.GetService<NoSearchDbContext>();
+            Assert.Equal(1, dbContext.Resources.Count());
+        }
+
     }
 }

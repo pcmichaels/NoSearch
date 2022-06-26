@@ -23,7 +23,10 @@ namespace NoSearch.Data.DataAccess
                 throw new Exception("Unable to get data context");
             }
 
-            context.Database.Migrate();
+            if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                context.Database.Migrate();
+            }
         }
     }
 }
