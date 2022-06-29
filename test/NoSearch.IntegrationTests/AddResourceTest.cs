@@ -42,15 +42,17 @@ namespace NoSearch.IntegrationTests
                 }
             };
 
-            var json = JsonSerializer.Serialize(submitNewViewModel);
-            var content = new StringContent(
-                json, 
-                System.Text.Encoding.UTF8,
-                "application/json");
+            var formEncoded = ConvertToFormData.ConvertToFormContent(submitNewViewModel);
+
+            //var json = JsonSerializer.Serialize(submitNewViewModel);
+            //var content = new StringContent(
+            //    json, 
+            //    System.Text.Encoding.UTF8,
+            //    "application/json");
 
             // Act
             using var response = await httpClient.PostAsync(
-                "/home/submitnew", content);
+                "/home/submitnew", formEncoded);
 
             // Assert
             Assert.True(response.IsSuccessStatusCode);
@@ -90,15 +92,18 @@ namespace NoSearch.IntegrationTests
                 }
             };
 
+            var formEncoded = ConvertToFormData.ConvertToFormContent(submitNewViewModel);
+/*
             var json = JsonSerializer.Serialize(submitNewViewModel);
             var content = new StringContent(
                 json,
                 System.Text.Encoding.UTF8,
                 "application/json");
+*/
 
             // Act
             using var response = await httpClient.PostAsync(
-                "/home/submitnew", content);
+                "/home/submitnew", formEncoded);
 
             // Assert
             Assert.True(response.IsSuccessStatusCode);            
