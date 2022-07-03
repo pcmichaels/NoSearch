@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 
 namespace NoSearch.IntegrationTests
 {
-    public class ConvertToFormData
+    public class ConvertToDictionaryData
     {
-        public static FormUrlEncodedContent ConvertToFormContent<T>(T toConvert)
+        public static Dictionary<string, string> ConvertToFormContent<T>(T toConvert)
         {            
             var kvpList = ReadObject(
                 typeof(T).Assembly, 
                 typeof(T), 
-                toConvert);
+                toConvert,
+                null);
 
-            var formContent = new FormUrlEncodedContent(kvpList);
-            return formContent;
+            return new Dictionary<string, string>(kvpList);
         }
 
-        private static List<KeyValuePair<string, string>> ReadObject(Assembly assembly, Type objectType, object toConvert)
+        private static List<KeyValuePair<string, string>> ReadObject(
+            Assembly assembly, Type objectType, object toConvert, string? parentObjectName)
         {
             var kvpList = new List<KeyValuePair<string, string>>();
             var props = objectType.GetProperties();
@@ -39,14 +40,20 @@ namespace NoSearch.IntegrationTests
                         var result = ReadObject(
                             assembly,
                             propType,
-                            value);
+                            value,
+                            prop.Name);
                     }
                 }
-
-                kvpList.Add(new KeyValuePair<string, string>(prop.Name, value!.ToString()));
+                
+                kvpList.Add(new KeyValuePair<string, string>(
+                    formatParentObjectName(parentObjectName, prop.Name), value!.ToString()));                
             }
 
             return kvpList;
+
+            string formatParentObjectName(string? parentName, string propName) =>
+                string.IsNullOrWhiteSpace(parentObjectName)
+                ? propName : $"{parentObjectName}.prop.Name";
         }
     }
 }

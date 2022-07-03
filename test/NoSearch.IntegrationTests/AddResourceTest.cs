@@ -5,6 +5,7 @@ using NoSearch.Data.DataAccess;
 using System.Text.Json;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace NoSearch.IntegrationTests
 {
@@ -42,7 +43,7 @@ namespace NoSearch.IntegrationTests
                 }
             };
 
-            var formEncoded = ConvertToFormData.ConvertToFormContent(submitNewViewModel);
+            var formEncoded = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
 
             //var json = JsonSerializer.Serialize(submitNewViewModel);
             //var content = new StringContent(
@@ -92,18 +93,23 @@ namespace NoSearch.IntegrationTests
                 }
             };
 
-            var formEncoded = ConvertToFormData.ConvertToFormContent(submitNewViewModel);
-/*
-            var json = JsonSerializer.Serialize(submitNewViewModel);
-            var content = new StringContent(
-                json,
-                System.Text.Encoding.UTF8,
-                "application/json");
-*/
+            var formEncoded = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
+            var dict = submitNewViewModel.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .ToDictionary(prop => prop.Name, prop => (string)prop.GetValue(submitNewViewModel, null));
+
+            var urlEncodedContent = new FormUrlEncodedContent(dict);            
+            /*
+                        var json = JsonSerializer.Serialize(submitNewViewModel);
+                        var content = new StringContent(
+                            json,
+                            System.Text.Encoding.UTF8,
+                            "application/json");
+            */
 
             // Act
             using var response = await httpClient.PostAsync(
-                "/home/submitnew", formEncoded);
+                "/home/submitnew", urlEncodedContent);
 
             // Assert
             Assert.True(response.IsSuccessStatusCode);            

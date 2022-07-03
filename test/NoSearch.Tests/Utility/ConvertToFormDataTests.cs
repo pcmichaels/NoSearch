@@ -27,7 +27,7 @@ namespace NoSearch.Tests.Utility
             };
 
             // Act
-            var encodedContent = ConvertToFormData.ConvertToFormContent(submitNewViewModel);
+            var encodedContent = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
 
             // Assert
             var result = await encodedContent.ReadAsFormDataAsync();
