@@ -1,4 +1,5 @@
 ﻿using NoSearch.Data.Resources;
+using NoSearch.Models;
 
 namespace NoSearch.App.Search
 {
@@ -9,6 +10,12 @@ namespace NoSearch.App.Search
         public SearchService(IResourceDataAccess resourceDataAccess)
         {
             _resourceDataAccess = resourceDataAccess;
+        }
+
+        public IEnumerable<ResourceModel> GetRecent(int count)
+        {
+            var resources = _resourceDataAccess.GetLatest(count);
+            return resources;
         }
 
         public IEnumerable<NoSearch.Models.ResourceModel> SearchResources(string searchText, bool isCasesSensitive)

@@ -12,7 +12,7 @@ namespace NoSearch.Tests.Utility
     public class ConvertToFormDataTests
     {
         [Fact]
-        public async Task ConvertToFormContent_ClassConverted() 
+        public void ConvertToFormContent_ClassConverted() 
         {
             // Arrange
             var submitNewViewModel = new SubmitNewViewModel()
@@ -27,11 +27,11 @@ namespace NoSearch.Tests.Utility
             };
 
             // Act
-            var encodedContent = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
+            var dict = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
 
-            // Assert
-            var result = await encodedContent.ReadAsFormDataAsync();
-            Assert.Equal("IsValidated", result.AllKeys.Skip(1).First());
+            // Assert            
+            Assert.True(Convert.ToBoolean(dict["IsValidated"]));
+            Assert.Equal("test", dict["NewResource.Name"]);
         }
     }
 }

@@ -15,6 +15,32 @@
     }
 
 <div class="text-center">
+    <p>Recent</p>
+    <table class="table table-striped">
+        @foreach (var recent in Model.Recent.OrderBy(a => a.Rank))
+    {
+        <tr onclick="window.open('@recent.Uri', '_blank');">
+            <td>
+                <div>
+                    @recent.Name
+                </div>
+            </td>
+            <td>
+                <div>
+                    @recent.Description
+                </div>
+            </td>
+            <td>
+                <div>
+                    @recent.Uri
+                </div>
+            </td>
+        </tr>        
+    }
+    </table>
+</div>
+
+<div class="text-center">
     @if (Model.SearchViewModel.Resources != null)
     {
         <table class="table table-striped">

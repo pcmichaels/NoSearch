@@ -31,7 +31,10 @@ namespace NoSearch.App.Controllers
             var model = new MainViewModel()
             {
                 SearchViewModel = new SearchViewModel(),
-                TotalNumberOfResources = 100
+                TotalNumberOfResources = 100,
+                Recent = _searchService.GetRecent(3)
+                    .ToList()
+                    .AsReadOnly()
             };
 
             return View(model);
@@ -49,8 +52,12 @@ namespace NoSearch.App.Controllers
                 SearchTerm = searchText,
                 Resources = resources.ToList()
             };
-
             mainViewModel.SearchViewModel = searchViewModel;
+
+            mainViewModel.Recent = _searchService.GetRecent(3)
+                .ToList()
+                .AsReadOnly();
+
             return View(mainViewModel);
         }
 
@@ -110,11 +117,13 @@ namespace NoSearch.App.Controllers
                 if (!result.IsSuccess)
                 {
                     submitNewViewModel.Error = result.Errors.First();
-                }
-            }
-            await UpdateTags(submitNewViewModel);
+                    await UpdateTags(submitNewViewModel);
 
-            return View("SubmitNew", submitNewViewModel);
+                    return View("SubmitNew", submitNewViewModel);
+                }
+            }            
+
+            return RedirectToAction("Index");
         }
 
         [AllowAnonymous]

@@ -29,15 +29,15 @@ namespace NoSearch.Data.Resources
 
         public IEnumerable<ResourceModel> GetAllResources()
         {
-            string executingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-            string jsonData = File.ReadAllText($"{executingDir}/Data/ResourceList.json");
-            var resources = JsonSerializer.Deserialize<IEnumerable<ResourceModel>>(jsonData);
-
-            if (resources == null)
-            {
-                throw new Exception("No data file found");
-            }
-
+            var resources = _noSearchDbContext
+                .Resources
+                .Select(a => new ResourceModel()
+                {
+                    Description = a.Description,
+                    Name = a.Name,
+                    Rank = a.Rank,
+                    Uri = a.Uri
+                });
             return resources;
         }
 
@@ -47,5 +47,14 @@ namespace NoSearch.Data.Resources
             return tags;
         }
 
+        public IEnumerable<ResourceModel> GetLatest(int count)
+        {
+            var resources = _noSearchDbContext
+                .Resources
+                .OrderByDescending(a => a.DateAdded)
+                .Take(count);
+
+            return resources;
+        }
     }
 }

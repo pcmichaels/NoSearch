@@ -43,7 +43,8 @@ namespace NoSearch.IntegrationTests
                 }
             };
 
-            var formEncoded = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
+            var dict = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
+            var formEncoded = new FormUrlEncodedContent(dict);
 
             //var json = JsonSerializer.Serialize(submitNewViewModel);
             //var content = new StringContent(
