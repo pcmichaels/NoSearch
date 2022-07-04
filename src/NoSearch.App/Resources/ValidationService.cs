@@ -16,6 +16,9 @@ namespace NoSearch.App.Resources
 
         public Result ValidateResource(ResourceModel resource)
         {
+            ArgumentNullException.ThrowIfNull(resource.Name);
+            ArgumentNullException.ThrowIfNull(resource.Description);
+
             if (_blockedWords == null)
             {
                 _blockedWords = _restrictedWordsDataAccess.GetAll();

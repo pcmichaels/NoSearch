@@ -13,11 +13,11 @@
             Uri = uri;
         }
 
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public int? Rank { get; set; }
-        public string Uri { get; set; }
+        public string? Uri { get; set; }
         public DateTimeOffset DateAdded { get; set; }
-        public virtual TagModel[] Tags { get; } 
+        public virtual TagModel[]? Tags { get; } 
     }
 }

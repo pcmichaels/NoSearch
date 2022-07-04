@@ -27,12 +27,12 @@ namespace NoSearch.App.Search
 
             var resources = _resourceDataAccess
                 .GetAllResources()
-                .Where(a => a.Name.Contains(searchText, isCasesSensitive ?
+                .Where(a => (a.Name?.Contains(searchText, isCasesSensitive ?
                         StringComparison.InvariantCulture :
-                        StringComparison.InvariantCultureIgnoreCase) ||
-                    a.Description.Contains(searchText, isCasesSensitive ?
+                        StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+                    (a.Description?.Contains(searchText, isCasesSensitive ?
                         StringComparison.InvariantCulture :
-                        StringComparison.InvariantCultureIgnoreCase));
+                        StringComparison.InvariantCultureIgnoreCase) ?? false));
 
             return resources;
         }
