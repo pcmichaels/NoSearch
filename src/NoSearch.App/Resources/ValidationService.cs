@@ -7,7 +7,7 @@ namespace NoSearch.App.Resources
     public class ValidationService : IValidationService
     {
         private readonly IRestrictedWordsDataAccess _restrictedWordsDataAccess;
-        private IEnumerable<string> _blockedWords;
+        private IEnumerable<string>? _blockedWords;
 
         public ValidationService(IRestrictedWordsDataAccess restrictedWordsDataAccess)
         {
@@ -19,6 +19,8 @@ namespace NoSearch.App.Resources
             if (_blockedWords == null)
             {
                 _blockedWords = _restrictedWordsDataAccess.GetAll();
+                if (_blockedWords == null || !_blockedWords.Any()) 
+                    return Result.Success();
             }
 
             if (_blockedWords.Any(a => resource.Name.Contains(a, StringComparison.OrdinalIgnoreCase))

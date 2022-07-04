@@ -2,9 +2,9 @@
 {
     public class SubmitNewViewModel
     {
-        public NoSearch.Models.ResourceModel NewResource { get; set; }
+        public NoSearch.Models.ResourceModel NewResource { get; set; } = new NoSearch.Models.ResourceModel();
         public bool IsValidated { get; set; }
-        public string Error { get; set; }
-        public IEnumerable<string> AllTags { get; set; }
+        public string? Error { get; set; }
+        public IEnumerable<string>? AllTags { get; set; }
     }
 }

@@ -9,7 +9,7 @@
             string uri)
         {
             Name = name;
-            Description = description;            
+            Description = description;
             Uri = uri;
         }
 

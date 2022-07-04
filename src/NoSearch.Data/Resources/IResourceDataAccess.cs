@@ -6,7 +6,7 @@ namespace NoSearch.Data.Resources
     {
         IEnumerable<ResourceModel> GetAllResources();
         IEnumerable<TagModel> GetAllTags();
-        void AddResource(ResourceModel resource);
+        Task AddResource(ResourceModel resource);
         IEnumerable<ResourceModel> GetLatest(int count);
     }
 }

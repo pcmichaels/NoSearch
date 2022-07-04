@@ -14,7 +14,7 @@ namespace NoSearch.Data.Resources
             _noSearchDbContext = noSearchDbContext;
         }
 
-        public void AddResource(ResourceModel resourceModel)
+        public async Task AddResource(ResourceModel resourceModel)
         {
             var resourceEntity = new Resource()
             {
@@ -24,7 +24,7 @@ namespace NoSearch.Data.Resources
                 Uri = resourceModel.Uri
             };
             _noSearchDbContext.Add(resourceEntity);
-            _noSearchDbContext.SaveChanges();
+            await _noSearchDbContext.SaveChangesAsync();
         }
 
         public IEnumerable<ResourceModel> GetAllResources()

@@ -2,6 +2,6 @@
 {
     public interface IRestrictedWordsDataAccess
     {
-        IEnumerable<string> GetAll();
+        IEnumerable<string>? GetAll();
     }
 }

@@ -2,11 +2,6 @@
 using NoSearch.App.Resources;
 using NoSearch.Data.Validation;
 using NoSearch.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NoSearch.Tests.SubmitNewResource

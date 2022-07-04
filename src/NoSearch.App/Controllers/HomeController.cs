@@ -43,9 +43,11 @@ namespace NoSearch.App.Controllers
         [HttpPost]
         public IActionResult Index(MainViewModel mainViewModel)
         {
-            string searchText = mainViewModel.SearchViewModel.SearchTerm;
+            string? searchText = mainViewModel.SearchViewModel.SearchTerm;
 
-            var resources = _searchService.SearchResources(searchText, false);
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                var resources = _searchService.SearchResources(searchText, false);
 
             var searchViewModel = new SearchViewModel()
             {
@@ -58,6 +60,12 @@ namespace NoSearch.App.Controllers
                 .ToList()
                 .AsReadOnly();
 
+                mainViewModel.SearchViewModel = searchViewModel;
+            }
+            else
+            {
+                mainViewModel.SearchViewModel = new SearchViewModel();                
+            }
             return View(mainViewModel);
         }
 
@@ -66,7 +74,7 @@ namespace NoSearch.App.Controllers
             var tags = await _resourceService.GetAllTags();
             var viewModel = new SubmitNewViewModel()
             {
-                AllTags = tags.Data.Select(a => a.Name)
+                AllTags = tags.Data!.Select(a => a.Name)
             };
 
             return View(viewModel);
@@ -75,15 +83,18 @@ namespace NoSearch.App.Controllers
         [HttpPost]
         public async Task<IActionResult> Lookup(SubmitNewViewModel submitNewViewModel)
         {
+            ArgumentNullException.ThrowIfNull(submitNewViewModel);
+            ArgumentNullException.ThrowIfNull(submitNewViewModel.NewResource);
+
             var result = await _resourceService.FindResource(submitNewViewModel.NewResource);
             if (!result.IsSuccess)
             {
-                submitNewViewModel.Error = result.Errors.First();
+                submitNewViewModel.Error = result.Errors!.First();
             }
             else
             {
                 ModelState.Clear();
-                submitNewViewModel.NewResource = result.Data;
+                submitNewViewModel.NewResource = result.Data!;
 
                 await UpdateTags(submitNewViewModel);
             }
@@ -92,31 +103,33 @@ namespace NoSearch.App.Controllers
         }
 
         private async Task UpdateTags(SubmitNewViewModel submitNewViewModel)
-        {
+        {            
+            ArgumentNullException.ThrowIfNull(submitNewViewModel);
+
             if (!(submitNewViewModel?.AllTags?.Any() ?? false))
             {
                 var tags = await _resourceService.GetAllTags();
                 if (tags.IsSuccess)
-                    submitNewViewModel.AllTags = tags.Data.Select(a => a.Name);
+                    submitNewViewModel!.AllTags = tags.Data!.Select(a => a.Name);
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> SubmitNew(SubmitNewViewModel submitNewViewModel)
         {
-            ArgumentNullException.ThrowIfNull(submitNewViewModel.NewResource);
+            ArgumentNullException.ThrowIfNull(submitNewViewModel?.NewResource);
 
             var validationResult = _validationService.ValidateResource(submitNewViewModel.NewResource);
             if (!validationResult.IsSuccess)
             {
-                submitNewViewModel.Error = validationResult.Errors.First();
+                submitNewViewModel.Error = validationResult.FirstError;
             }
             else
             {
                 var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
                 if (!result.IsSuccess)
                 {
-                    submitNewViewModel.Error = result.Errors.First();
+                    submitNewViewModel.Error = result.FirstError;
                     await UpdateTags(submitNewViewModel);
 
                     return View("SubmitNew", submitNewViewModel);

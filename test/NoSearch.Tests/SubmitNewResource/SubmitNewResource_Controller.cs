@@ -7,11 +7,6 @@ using NoSearch.App.Resources;
 using NoSearch.App.Search;
 using NoSearch.Common;
 using NoSearch.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NoSearch.Tests.SubmitNewResource
@@ -24,17 +19,17 @@ namespace NoSearch.Tests.SubmitNewResource
             // Arrange
             var logger = new Mock<ILogger<HomeController>>();
             var searchService = new Mock<ISearchService>();
-            var resourceService = new Mock<IResourceService>();            
+            var resourceService = new Mock<IResourceService>();
             resourceService.Setup(a => a.FindResource(It.IsAny<ResourceModel>())).ReturnsAsync(
                 DataResult<ResourceModel>.Success(new ResourceModel() { Name = "Test" }));
             var validationService = new Mock<IValidationService>();
 
-            var controller = new HomeController(logger.Object, 
+            var controller = new HomeController(logger.Object,
                 searchService.Object, resourceService.Object, validationService.Object);
 
             var submitNewViewModel = new SubmitNewViewModel()
             {
-                AllTags = new[] {"Blogs", "Programming"}                
+                AllTags = new[] { "Blogs", "Programming" }
             };
 
             // Act

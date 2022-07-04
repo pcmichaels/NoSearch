@@ -2,12 +2,21 @@
 {
     public class Result
     {
-        public bool IsSuccess { get; private set; }                
-        public string[] Errors { get; private set; }
+        public bool IsSuccess { get; private set; }
+        public string[]? Errors { get; private set; }
+        public string FirstError
+        {
+            get
+            {
+                if (Errors != null && Errors.Any())
+                    return Errors.First();
+                return string.Empty;
+            }
+        }
 
         public static Result Success() =>
             new Result()
-            {                
+            {
                 IsSuccess = true
             };
 
@@ -15,7 +24,7 @@
             new Result()
             {
                 IsSuccess = false,
-                Errors = new[] {error}
+                Errors = new[] { error }
             };
     }
 }

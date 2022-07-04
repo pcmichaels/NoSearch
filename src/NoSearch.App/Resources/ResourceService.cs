@@ -26,7 +26,7 @@ namespace NoSearch.App.Resources
                 return DataResult<ResourceModel>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
             }
 
-            _resourceDataAccess.AddResource(resource);
+            await _resourceDataAccess.AddResource(resource);
 
             return DataResult<NoSearch.Models.ResourceModel>.Success(resource);
         }

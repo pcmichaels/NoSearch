@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -11,9 +12,10 @@ namespace NoSearch.Data.DataAccess
             services.AddDbContext<NoSearchDbContext>(a =>
                 a.UseSqlServer(connectionString));
 
-        public static void UpdateDatabase(this IServiceProvider serviceProvider)
+        public static void UpdateDatabase(this IApplicationBuilder applicationBuilder)
         {
-            using var serviceScope = serviceProvider
+            using var serviceScope = applicationBuilder
+                .ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope();
 
@@ -25,8 +27,8 @@ namespace NoSearch.Data.DataAccess
 
             if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
             {
-                context.Database.Migrate();
-            }
+            context.Database.Migrate();
         }
     }
+}
 }
