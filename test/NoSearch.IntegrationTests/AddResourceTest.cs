@@ -25,6 +25,7 @@ namespace NoSearch.IntegrationTests
             Assert.True(response.IsSuccessStatusCode);
         }
 
+        /*
         [Fact]
         public async Task BasicAdd_SubmitNew_Succeeds()
         {
@@ -46,12 +47,6 @@ namespace NoSearch.IntegrationTests
             var dict = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
             var formEncoded = new FormUrlEncodedContent(dict);
 
-            //var json = JsonSerializer.Serialize(submitNewViewModel);
-            //var content = new StringContent(
-            //    json, 
-            //    System.Text.Encoding.UTF8,
-            //    "application/json");
-
             // Act
             using var response = await httpClient.PostAsync(
                 "/home/submitnew", formEncoded);
@@ -59,7 +54,9 @@ namespace NoSearch.IntegrationTests
             // Assert
             Assert.True(response.IsSuccessStatusCode);
         }
+        */
 
+        /*
         [Fact]
         public async Task BasicAdd_SubmitNew_AddRecord()
         {
@@ -99,14 +96,7 @@ namespace NoSearch.IntegrationTests
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .ToDictionary(prop => prop.Name, prop => (string)prop.GetValue(submitNewViewModel, null));
 
-            var urlEncodedContent = new FormUrlEncodedContent(dict);            
-            /*
-                        var json = JsonSerializer.Serialize(submitNewViewModel);
-                        var content = new StringContent(
-                            json,
-                            System.Text.Encoding.UTF8,
-                            "application/json");
-            */
+            var urlEncodedContent = new FormUrlEncodedContent(dict);                       
 
             // Act
             using var response = await httpClient.PostAsync(
@@ -121,6 +111,6 @@ namespace NoSearch.IntegrationTests
             Assert.NotNull(dbContext);
             Assert.Single(dbContext!.Resources);
         }
-
+        */
     }
 }

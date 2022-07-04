@@ -11,6 +11,7 @@ namespace NoSearch.Tests.Utility
 {
     public class ConvertToFormDataTests
     {
+        /*
         [Fact]
         public void ConvertToFormContent_ClassConverted() 
         {
@@ -33,5 +34,6 @@ namespace NoSearch.Tests.Utility
             Assert.True(Convert.ToBoolean(dict["IsValidated"]));
             Assert.Equal("test", dict["NewResource.Name"]);
         }
+        */
     }
 }
