@@ -2,6 +2,6 @@
 {
     public interface IDateTimeHelper
     {
-        public DateTimeOffset GetCurrentTime();
+        DateTimeOffset GetCurrentDate();
     }
 }

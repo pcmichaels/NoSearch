@@ -21,7 +21,8 @@ namespace NoSearch.Data.Resources
                 Name = resourceModel.Name,
                 Description = resourceModel.Description,
                 Rank = resourceModel.Rank,
-                Uri = resourceModel.Uri
+                Uri = resourceModel.Uri,
+                DateAdded = resourceModel.DateAdded
             };
             _noSearchDbContext.Add(resourceEntity);
             await _noSearchDbContext.SaveChangesAsync();

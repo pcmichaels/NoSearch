@@ -8,7 +8,7 @@ namespace NoSearch.Common
 {
     public class DateTimeHelper : IDateTimeHelper
     {
-        public DateTimeOffset GetCurrentTime()
+        public DateTimeOffset GetCurrentDate()
         {
             return DateTime.Now;
         }

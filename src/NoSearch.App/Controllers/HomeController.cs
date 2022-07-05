@@ -125,7 +125,7 @@ namespace NoSearch.App.Controllers
                 submitNewViewModel.Error = validationResult.FirstError;
             }
             else
-            {
+            {                
                 var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
                 if (!result.IsSuccess)
                 {

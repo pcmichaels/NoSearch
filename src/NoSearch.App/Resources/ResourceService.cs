@@ -9,12 +9,15 @@ namespace NoSearch.App.Resources
     {
         private readonly IResourceDataAccess _resourceDataAccess;
         private readonly IFindMetaData _findMetaData;
+        private readonly IDateTimeHelper _dateTimeHelper;
 
         public ResourceService(IResourceDataAccess resourceDataAccess,
-            IFindMetaData findMetaData)
+            IFindMetaData findMetaData,
+            IDateTimeHelper dateTimeHelper)
         {
             _resourceDataAccess = resourceDataAccess;
             _findMetaData = findMetaData;
+            _dateTimeHelper = dateTimeHelper;
         }
 
         public async Task<DataResult<NoSearch.Models.ResourceModel>> AddResource(NoSearch.Models.ResourceModel resource)
@@ -26,6 +29,7 @@ namespace NoSearch.App.Resources
                 return DataResult<ResourceModel>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
             }
 
+            resource.DateAdded = _dateTimeHelper.GetCurrentDate();
             await _resourceDataAccess.AddResource(resource);
 
             return DataResult<NoSearch.Models.ResourceModel>.Success(resource);
