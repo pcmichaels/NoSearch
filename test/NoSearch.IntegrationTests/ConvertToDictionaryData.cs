@@ -42,6 +42,7 @@ namespace NoSearch.IntegrationTests
                             propType,
                             value,
                             prop.Name);
+                        kvpList.AddRange(result);
                     }
                 }
                 
@@ -53,7 +54,7 @@ namespace NoSearch.IntegrationTests
 
             string formatParentObjectName(string? parentName, string propName) =>
                 string.IsNullOrWhiteSpace(parentObjectName)
-                ? propName : $"{parentObjectName}.prop.Name";
+                ? propName : $"{parentObjectName}.{propName}";
         }
     }
 }
