@@ -57,5 +57,23 @@ namespace NoSearch.Data.Resources
 
             return resources;
         }
+
+        public ResourceModel? GetResurceByUrl(string url)
+        {
+            var resources = _noSearchDbContext
+                .Resources
+                .Where(a => a.Uri == url);
+
+            if (resources == null || !resources.Any())
+                return null;
+
+            if (resources.Count() > 1)
+            {
+                // Log error - there's more than
+                // one resource with the same URL
+            }
+
+            return resources.First();
+        }
     }
 }

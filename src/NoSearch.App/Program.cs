@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using NoSearch.Common;
 using NoSearch.Data.DataAccess;
 using NoSearch.Data.Resources;
 using WebSiteMeta.Scraper;
@@ -35,7 +36,11 @@ builder.Services.Scan(scan => scan
     .FromAssemblyOf<IResourceDataAccess>()
         .AddClasses(true)
             .AsMatchingInterface()
-            .WithScopedLifetime());
+            .WithScopedLifetime()
+    .FromAssemblyOf<IDateTimeHelper>()
+        .AddClasses(true)
+            .AsMatchingInterface()
+            .WithSingletonLifetime());
 
 builder.Services.AddScoped<IFindMetaData, FindMetaData>(a =>
 {

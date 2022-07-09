@@ -26,7 +26,15 @@ namespace NoSearch.App.Resources
             bool isValid = _findMetaData.ValidateUrl(cleanUrl);
             if (!isValid)
             {
-                return DataResult<ResourceModel>.Fail($"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
+                return DataResult<ResourceModel>.Fail(
+                    $"Invalid URL provided: {resource.Uri}, cleaned to {cleanUrl}");
+            }
+
+            var existingResource = _resourceDataAccess.GetResurceByUrl(cleanUrl);
+            if (existingResource != null)
+            {
+                return DataResult<ResourceModel>.Fail(
+                    $"URL has already been added");
             }
 
             resource.DateAdded = _dateTimeHelper.GetCurrentDate();

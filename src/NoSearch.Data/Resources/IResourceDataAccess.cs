@@ -8,5 +8,6 @@ namespace NoSearch.Data.Resources
         IEnumerable<TagModel> GetAllTags();
         Task AddResource(ResourceModel resource);
         IEnumerable<ResourceModel> GetLatest(int count);
+        ResourceModel? GetResurceByUrl(string url);
     }
 }
