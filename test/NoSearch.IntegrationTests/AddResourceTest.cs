@@ -24,8 +24,7 @@ namespace NoSearch.IntegrationTests
             // Assert
             Assert.True(response.IsSuccessStatusCode);
         }
-
-        /*
+        
         [Fact]
         public async Task BasicAdd_SubmitNew_Succeeds()
         {
@@ -54,9 +53,7 @@ namespace NoSearch.IntegrationTests
             // Assert
             Assert.True(response.IsSuccessStatusCode);
         }
-        */
 
-        /*
         [Fact]
         public async Task BasicAdd_SubmitNew_AddRecord()
         {
@@ -111,6 +108,5 @@ namespace NoSearch.IntegrationTests
             Assert.NotNull(dbContext);
             Assert.Single(dbContext!.Resources);
         }
-        */
     }
 }
