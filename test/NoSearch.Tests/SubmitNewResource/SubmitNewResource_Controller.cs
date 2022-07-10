@@ -39,7 +39,8 @@ namespace NoSearch.Tests.SubmitNewResource
             var viewResult = Assert.IsType<ViewResult>(actionResult);
             var resultModel = Assert.IsType<SubmitNewViewModel>(viewResult.ViewData.Model);
 
-            Assert.Equal(2, resultModel.AllTags.Count());
+            Assert.NotNull(resultModel.AllTags);
+            Assert.Equal(2, resultModel.AllTags!.Count());
             Assert.Equal("Test", resultModel.NewResource.Name);
         }
 
@@ -76,7 +77,8 @@ namespace NoSearch.Tests.SubmitNewResource
             var viewResult = Assert.IsType<ViewResult>(actionResult);
             var resultModel = Assert.IsType<SubmitNewViewModel>(viewResult.ViewData.Model);
 
-            Assert.Equal(2, resultModel.AllTags.Count());
+            Assert.NotNull(resultModel.AllTags);
+            Assert.Equal(2, resultModel.AllTags!.Count());
             Assert.Equal("Test", resultModel.NewResource.Name);
         }
     }
