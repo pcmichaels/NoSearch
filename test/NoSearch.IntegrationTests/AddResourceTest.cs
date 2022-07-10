@@ -88,12 +88,8 @@ namespace NoSearch.IntegrationTests
                 }
             };
 
-            var formEncoded = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
-            var dict = submitNewViewModel.GetType()
-                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .ToDictionary(prop => prop.Name, prop => (string)prop.GetValue(submitNewViewModel, null));
-
-            var urlEncodedContent = new FormUrlEncodedContent(dict);                       
+            var dict = ConvertToDictionaryData.ConvertToFormContent(submitNewViewModel);
+            var urlEncodedContent = new FormUrlEncodedContent(dict);
 
             // Act
             using var response = await httpClient.PostAsync(
