@@ -67,7 +67,10 @@ namespace NoSearch.IntegrationTests
                             d => d.ServiceType ==
                             typeof(DbContextOptions<NoSearchDbContext>));
 
-                        services.Remove(descriptor);
+                        if (descriptor != null)
+                        {
+                            services.Remove(descriptor);
+                        }
 
                         services.AddDbContext<NoSearchDbContext>(options =>
                         {

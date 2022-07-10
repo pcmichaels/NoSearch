@@ -20,8 +20,8 @@ namespace NoSearch.Data.DataAccess
             modelBuilder.InitialiseRestrictedWordData();
         }
 
-        public DbSet<Resource> Resources { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<RestrictedWord> RestrictedWords { get; set; }
+        public DbSet<Resource> Resources => Set<Resource>();
+        public DbSet<Tag> Tags => Set<Tag>();
+        public DbSet<RestrictedWord> RestrictedWords => Set<RestrictedWord>();
     }
 }

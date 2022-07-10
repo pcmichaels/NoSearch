@@ -11,6 +11,8 @@ namespace NoSearch.IntegrationTests
     {
         public static Dictionary<string, string> ConvertToFormContent<T>(T toConvert)
         {            
+            ArgumentNullException.ThrowIfNull(toConvert);
+
             var kvpList = ReadObject(
                 typeof(T).Assembly, 
                 typeof(T), 
@@ -31,9 +33,14 @@ namespace NoSearch.IntegrationTests
                 var value = prop.GetValue(toConvert);
                 if (value == null) continue;
 
-                if (prop.GetType().IsClass && !(prop.PropertyType.Assembly.FullName?.Contains("System") ?? false))
+                var propTypeAssembly = prop.PropertyType.Assembly;
+                if (propTypeAssembly == null) throw new Exception(
+                    $"Could not find assembly for {prop.PropertyType}");
+
+                if (prop.GetType().IsClass && !(propTypeAssembly.FullName?.Contains("System") ?? false))
                 {
-                    Type propType = prop.PropertyType.Assembly.GetType(prop.PropertyType.FullName);
+                    string propertyTypeName = prop.PropertyType.FullName!;
+                    Type? propType = propTypeAssembly.GetType(propertyTypeName);
 
                     if (propType != null)
                     {
@@ -47,7 +54,7 @@ namespace NoSearch.IntegrationTests
                 }
                 
                 kvpList.Add(new KeyValuePair<string, string>(
-                    formatParentObjectName(parentObjectName, prop.Name), value!.ToString()));                
+                    formatParentObjectName(parentObjectName, prop.Name), value?.ToString() ?? string.Empty));                
             }
 
             return kvpList;

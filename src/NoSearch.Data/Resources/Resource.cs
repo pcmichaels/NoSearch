@@ -6,6 +6,6 @@ namespace NoSearch.Data.Resources
     {
         public int Id { get; set; }
 
-        public override Tag[] Tags { get; }        
+        public override Tag[] Tags { get; } = null!;
     }
 }
