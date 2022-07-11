@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NoSearch.Data.DataAccess;
 using System;
@@ -45,5 +47,19 @@ namespace NoSearch.IntegrationTests
 
             });
         }
+
+        protected override IHost CreateHost(IHostBuilder builder)
+        {
+            builder.ConfigureAppConfiguration(
+                config => config.AddInMemoryCollection(
+                    new Dictionary<string, string>
+                    {
+                        ["AzureAd.ClientId"] = "1234"
+                    }));
+
+            var host = base.CreateHost(builder);
+            return host;
+        }
+
     }
 }
