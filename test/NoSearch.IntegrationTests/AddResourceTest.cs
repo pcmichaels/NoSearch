@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NoSearch.App.Models;
 using NoSearch.Data.DataAccess;
-using System.Text.Json;
 using Xunit;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace NoSearch.IntegrationTests
 {
     public class AddResourceTest
     {
         [Fact]
-        public async Task BasicAdd_SubmitNew_ReturnsPage()
+        public async Task HomeController_SubmitNew_Get_OKStatus()
         {
             // Arrange
-            var appFactory = new WebApplicationFactory<Program>();
+            var appFactory = new TestWebApplicationFactory<Program>();
             var httpClient = appFactory.CreateClient();
 
             // Act
@@ -24,12 +22,12 @@ namespace NoSearch.IntegrationTests
             // Assert
             Assert.True(response.IsSuccessStatusCode);
         }
-        
+
         [Fact]
-        public async Task BasicAdd_SubmitNew_Succeeds()
+        public async Task HomeController_SubmitNew_Post_OKStatus()
         {
             // Arrange
-            var appFactory = new WebApplicationFactory<Program>();
+            var appFactory = new TestWebApplicationFactory<Program>();
             var httpClient = appFactory.CreateClient();
 
             var submitNewViewModel = new SubmitNewViewModel()
@@ -55,30 +53,16 @@ namespace NoSearch.IntegrationTests
         }
 
         [Fact]
-        public async Task BasicAdd_SubmitNew_AddRecord()
+        public async Task HomeController_SubmitNew_Post_AddRecord()
         {
             // Arrange
-            var appFactory = new WebApplicationFactory<Program>()
-                .WithWebHostBuilder(host =>
-                {
-                    host.ConfigureServices(services =>
-                    {
-                        var descriptor = services.SingleOrDefault(
-                            d => d.ServiceType ==
-                            typeof(DbContextOptions<NoSearchDbContext>));
+            var appFactory = new TestWebApplicationFactory<Program>();
+            var scope = appFactory.Services.GetService<IServiceScopeFactory>()!.CreateScope();
+            var dbContext = scope.ServiceProvider.GetService<NoSearchDbContext>();
 
-                        if (descriptor != null)
-                        {
-                            services.Remove(descriptor);
-                        }
-
-                        services.AddDbContext<NoSearchDbContext>(options =>
-                        {
-                            options.UseInMemoryDatabase("InMemoryDB");
-                        });
-                    });
-                });
             var httpClient = appFactory.CreateClient();
+
+            int initialResourceCount = dbContext?.Resources?.Count() ?? 0;
 
             var submitNewViewModel = new SubmitNewViewModel()
             {
@@ -99,13 +83,10 @@ namespace NoSearch.IntegrationTests
                 "/home/submitnew", urlEncodedContent);
 
             // Assert
-            Assert.True(response.IsSuccessStatusCode);            
-
-            var scope = appFactory.Services.GetService<IServiceScopeFactory>()!.CreateScope();
-            var dbContext = scope.ServiceProvider.GetService<NoSearchDbContext>();
+            Assert.True(response.IsSuccessStatusCode);
 
             Assert.NotNull(dbContext);
-            Assert.Single(dbContext!.Resources);
+            Assert.Equal(initialResourceCount + 1, dbContext!.Resources.Count());
         }
     }
 }

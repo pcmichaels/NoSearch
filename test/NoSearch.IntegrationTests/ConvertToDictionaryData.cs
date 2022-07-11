@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace NoSearch.IntegrationTests
 {
     public class ConvertToDictionaryData
     {
         public static Dictionary<string, string> ConvertToFormContent<T>(T toConvert)
-        {            
+        {
             ArgumentNullException.ThrowIfNull(toConvert);
 
             var kvpList = ReadObject(
-                typeof(T).Assembly, 
-                typeof(T), 
+                typeof(T).Assembly,
+                typeof(T),
                 toConvert,
                 null);
 
@@ -52,9 +47,9 @@ namespace NoSearch.IntegrationTests
                         kvpList.AddRange(result);
                     }
                 }
-                
+
                 kvpList.Add(new KeyValuePair<string, string>(
-                    formatParentObjectName(parentObjectName, prop.Name), value?.ToString() ?? string.Empty));                
+                    formatParentObjectName(parentObjectName, prop.Name), value?.ToString() ?? string.Empty));
             }
 
             return kvpList;
