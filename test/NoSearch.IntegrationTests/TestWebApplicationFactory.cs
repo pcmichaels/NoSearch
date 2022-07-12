@@ -56,14 +56,13 @@ namespace NoSearch.IntegrationTests
                     {
                         ["AzureAd:ClientId"] = "1234",
                         ["AzureAd:Instance"] = "https://",
-                        ["Domain"] = "NoSearch.App",
-                        ["TenantId"] = "12345",
-                        ["CallbackPath"] = "/signin-oidc"
+                        ["AzureAd:Domain"] = "NoSearch.App",
+                        ["AzureAd:TenantId"] = "12345",
+                        ["AzureAd:CallbackPath"] = "/signin-oidc"
                     }));
 
             var host = base.CreateHost(builder);
             return host;
         }
-
     }
 }
