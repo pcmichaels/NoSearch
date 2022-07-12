@@ -54,7 +54,11 @@ namespace NoSearch.IntegrationTests
                 config => config.AddInMemoryCollection(
                     new Dictionary<string, string>
                     {
-                        ["AzureAd:ClientId"] = "1234"
+                        ["AzureAd:ClientId"] = "1234",
+                        ["AzureAd:Instance"] = "https://",
+                        ["Domain"] = "NoSearch.App",
+                        ["TenantId"] = "12345",
+                        ["CallbackPath"] = "/signin-oidc"
                     }));
 
             var host = base.CreateHost(builder);
