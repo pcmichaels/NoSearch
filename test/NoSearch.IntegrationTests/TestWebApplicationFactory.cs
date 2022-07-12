@@ -54,7 +54,7 @@ namespace NoSearch.IntegrationTests
                 config => config.AddInMemoryCollection(
                     new Dictionary<string, string>
                     {
-                        ["AzureAd.ClientId"] = "1234"
+                        ["AzureAd:ClientId"] = "1234"
                     }));
 
             var host = base.CreateHost(builder);
