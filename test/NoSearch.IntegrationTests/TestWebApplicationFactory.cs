@@ -55,7 +55,7 @@ namespace NoSearch.IntegrationTests
                     new Dictionary<string, string>
                     {
                         ["AzureAd:ClientId"] = "1234",
-                        ["AzureAd:Instance"] = "https://",
+                        ["AzureAd:Instance"] = "https://login.microsoftonline.com/",
                         ["AzureAd:Domain"] = "NoSearch.App",
                         ["AzureAd:TenantId"] = "12345",
                         ["AzureAd:CallbackPath"] = "/signin-oidc"
