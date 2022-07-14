@@ -48,7 +48,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}
+          path: website
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -57,4 +57,7 @@ jobs:
           app-name: 'NoSearchApp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6A9166A23A574CE799D9AE117325508F }}
-          package: .
+          package: website
+
+
+
