@@ -36,6 +36,9 @@ jobs:
       - name: dotnet publish
         run: dotnet publish --no-build -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
+      - name: debug
+        run: ls -lrt ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
