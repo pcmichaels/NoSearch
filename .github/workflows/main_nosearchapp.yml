@@ -28,10 +28,10 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: debug
-        run: ls -lrt .
+        run: ls -lrt ./src
 
       - name: Restore dependencies
-        run: dotnet restore ./NoSearch.App
+        run: dotnet restore ./src/NoSearch.App
 
       - name: Build with dotnet
         run: dotnet build ./NoSearch.App --no-restore --configuration Release
