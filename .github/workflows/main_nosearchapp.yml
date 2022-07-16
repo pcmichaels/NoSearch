@@ -27,6 +27,9 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: debug
+        run: ls -lrt .
+
       - name: Restore dependencies
         run: dotnet restore ./NoSearch.App
 
