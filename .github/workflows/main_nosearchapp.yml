@@ -28,13 +28,13 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependencies
-        run: dotnet restore NoSearch.App
+        run: dotnet restore ./NoSearch.App
 
       - name: Build with dotnet
-        run: dotnet build NoSearch.App --no-restore --configuration Release
+        run: dotnet build ./NoSearch.App --no-restore --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NoSearch.App --no-build -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+        run: dotnet publish ./NoSearch.App --no-build -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
       - name: debug
         run: ls -lrt ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
