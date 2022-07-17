@@ -15,7 +15,10 @@ namespace NoSearch.Data.Resources
                 new Tag("News", -2),
                 new Tag("Programming", -3),
                 new Tag("Tutorial", -4),
-                new Tag("Video", -5)
+                new Tag("Video", -5),
+                new Tag("Online Tools", -6),
+                new Tag("Online Games", -7),
+                new Tag("Dissertation / White Paper", -8)
             );        
     }
 }
