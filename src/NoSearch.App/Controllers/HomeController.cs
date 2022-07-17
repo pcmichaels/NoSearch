@@ -90,6 +90,8 @@ namespace NoSearch.App.Controllers
             if (!result.IsSuccess)
             {
                 submitNewViewModel.Error = result.Errors!.First();
+
+                await UpdateTags(submitNewViewModel);
             }
             else
             {

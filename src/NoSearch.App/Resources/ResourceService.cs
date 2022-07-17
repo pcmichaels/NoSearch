@@ -10,14 +10,17 @@ namespace NoSearch.App.Resources
         private readonly IResourceDataAccess _resourceDataAccess;
         private readonly IFindMetaData _findMetaData;
         private readonly IDateTimeHelper _dateTimeHelper;
+        private readonly ILogger<ResourceService> _logger;
 
         public ResourceService(IResourceDataAccess resourceDataAccess,
             IFindMetaData findMetaData,
-            IDateTimeHelper dateTimeHelper)
+            IDateTimeHelper dateTimeHelper,
+            ILogger<ResourceService> logger)
         {
             _resourceDataAccess = resourceDataAccess;
             _findMetaData = findMetaData;
             _dateTimeHelper = dateTimeHelper;
+            _logger = logger;
         }
 
         public async Task<DataResult<NoSearch.Models.ResourceModel>> AddResource(NoSearch.Models.ResourceModel resource)
@@ -55,12 +58,13 @@ namespace NoSearch.App.Resources
             var data = await _findMetaData.Run(cleanUrl);
             if (!data.IsSuccess)
             {
-                return DataResult<ResourceModel>.Fail($"Invalid URL provided: {resource.Uri}");
+                // return DataResult<ResourceModel>.Fail($"Unable to find metadata: {resource.Uri}");
+                _logger.LogWarning($"Unable to find metadata: {resource.Uri}");
             }
 
-            resource.Name = resource.Name ?? data.Metadata.Title;
-            resource.Description = resource.Description ?? data.Metadata.Description;
-            resource.Uri = data.Metadata.Url;
+            resource.Name = resource.Name ?? data?.Metadata?.Title ?? String.Empty;
+            resource.Description = resource.Description ?? data?.Metadata?.Description ?? String.Empty;
+            resource.Uri = data?.Metadata?.Url ?? String.Empty;
 
             return DataResult<NoSearch.Models.ResourceModel>.Success(resource);
         }
