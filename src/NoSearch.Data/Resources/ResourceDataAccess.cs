@@ -32,6 +32,7 @@ namespace NoSearch.Data.Resources
         {
             var resources = _noSearchDbContext
                 .Resources
+                .Where(a => a.IsApproved)
                 .Select(a => new ResourceModel()
                 {
                     Description = a.Description,
@@ -52,6 +53,7 @@ namespace NoSearch.Data.Resources
         {
             var resources = _noSearchDbContext
                 .Resources
+                .Where(a => a.IsApproved)
                 .OrderByDescending(a => a.DateAdded)
                 .Take(count);
 
@@ -62,7 +64,8 @@ namespace NoSearch.Data.Resources
         {
             var resources = _noSearchDbContext
                 .Resources
-                .Where(a => a.Uri == url);
+                .Where(a => a.IsApproved 
+                    && a.Uri == url);
 
             if (resources == null || !resources.Any())
                 return null;

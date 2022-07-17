@@ -7,5 +7,7 @@ namespace NoSearch.Data.Resources
         public int Id { get; set; }
 
         public override Tag[] Tags { get; } = null!;
+
+        public bool IsApproved { get; set; } = false;
     }
 }
