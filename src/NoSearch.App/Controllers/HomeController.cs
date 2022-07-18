@@ -86,6 +86,8 @@ namespace NoSearch.App.Controllers
             ArgumentNullException.ThrowIfNull(submitNewViewModel);
             ArgumentNullException.ThrowIfNull(submitNewViewModel.NewResource);
 
+            _logger.LogInformation("Lookup", submitNewViewModel.NewResource.Uri);
+
             var result = await _resourceService.FindResource(submitNewViewModel.NewResource);
             if (!result.IsSuccess)
             {
