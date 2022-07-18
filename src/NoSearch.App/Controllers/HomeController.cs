@@ -89,14 +89,14 @@ namespace NoSearch.App.Controllers
             var result = await _resourceService.FindResource(submitNewViewModel.NewResource);
             if (!result.IsSuccess)
             {
-                submitNewViewModel.Error = result.Errors!.First();
+                submitNewViewModel.Message = result.Errors!.First();
 
                 await UpdateTags(submitNewViewModel);
             }
             else
             {
                 ModelState.Clear();
-                submitNewViewModel.NewResource = result.Data!;
+                submitNewViewModel.NewResource = result.Data!;                
 
                 await UpdateTags(submitNewViewModel);
             }
@@ -124,21 +124,25 @@ namespace NoSearch.App.Controllers
             var validationResult = _validationService.ValidateResource(submitNewViewModel.NewResource);
             if (!validationResult.IsSuccess)
             {
-                submitNewViewModel.Error = validationResult.FirstError;
+                submitNewViewModel.Message = validationResult.FirstError;                
             }
             else
             {                
                 var result = await _resourceService.AddResource(submitNewViewModel.NewResource);
-                if (!result.IsSuccess)
+                if (result.IsSuccess)
                 {
-                    submitNewViewModel.Error = result.FirstError;
-                    await UpdateTags(submitNewViewModel);
-
-                    return View("SubmitNew", submitNewViewModel);
+                    ModelState.Clear();
+                    submitNewViewModel.Message = $"Your submission of {submitNewViewModel.NewResource.Name} has been received.  It will appear on the site as soon as it has been approved.";
+                    submitNewViewModel.NewResource = new NoSearch.Models.ResourceModel();                    
                 }
-            }            
+                else
+                {
+                    submitNewViewModel.Message = result.FirstError;                                     
+                }
+            }
 
-            return RedirectToAction("Index");
+            await UpdateTags(submitNewViewModel);
+            return View("SubmitNew", submitNewViewModel);
         }
 
         [AllowAnonymous]
