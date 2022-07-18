@@ -64,7 +64,9 @@ namespace NoSearch.App.Resources
 
             resource.Name = resource.Name ?? data?.Metadata?.Title ?? String.Empty;
             resource.Description = resource.Description ?? data?.Metadata?.Description ?? String.Empty;
-            resource.Uri = data?.Metadata?.Url ?? String.Empty;
+
+            // If we get a URL back then prefer that
+            resource.Uri = data?.Metadata?.Url ?? resource.Uri ?? String.Empty;
 
             return DataResult<NoSearch.Models.ResourceModel>.Success(resource);
         }
