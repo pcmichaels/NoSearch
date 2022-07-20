@@ -31,3 +31,11 @@ td a {
     background-color: orange;
 }
 
+.img-icon {
+    width: 70px;    
+}
+
+.input-lg {
+    height: 60px;
+    font-size: 40px;    
+}

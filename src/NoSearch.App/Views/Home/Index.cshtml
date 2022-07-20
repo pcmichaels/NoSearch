@@ -18,16 +18,21 @@
 
     @using (Html.BeginForm())  
     {                 
-        @Html.TextBoxFor(a => a.SearchViewModel.SearchTerm, new { 
-            @class = "form-control", 
-            @onkeyup = "onchangeevent(this.value);" 
-        })                  
+        <div class="row m-5">            
+            <div class="col-sm-2"></div>
+            <div class="col-sm-7">
+                @Html.TextBoxFor(a => a.SearchViewModel.SearchTerm, new { 
+                    @class = "form-control input-lg", 
+                    @onkeyup = "onchangeevent(this.value);" 
+                })                  
+            </div>
        
-        <div class="m-2 col text-center">
-            <input type="submit" id="submitSearch" value="Search" disabled class="btn btn-primary btn-lg" />  
+            <div class="col-sm-2 text-start">
+                <input type="image" src="assets/magnifier_t.png" id="submitSearch" value="Search" disabled class="btn btn-primary img-icon" />  
 
+            </div>
         </div>
-    }
+    }    
 
 @if (Model.SearchViewModel.Resources == null)
 {
