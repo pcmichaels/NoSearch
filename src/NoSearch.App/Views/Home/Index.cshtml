@@ -7,11 +7,9 @@
 @section scripts {
     <script type="text/javascript">
         function onchangeevent(value) {            
-            if (value == null || value.trim() === '') {
-                console.log('disable');
+            if (value == null || value.trim() === '') {                
                 document.getElementById("submitSearch").disabled = true;                
-            } else {
-                console.log('enable');
+            } else {                
                 document.getElementById("submitSearch").disabled = false;
             }
         }
