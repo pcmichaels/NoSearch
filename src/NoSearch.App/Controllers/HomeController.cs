@@ -49,22 +49,22 @@ namespace NoSearch.App.Controllers
             {
                 var resources = _searchService.SearchResources(searchText, false);
 
-            var searchViewModel = new SearchViewModel()
-            {
-                SearchTerm = searchText,
-                Resources = resources.ToList()
-            };
-            mainViewModel.SearchViewModel = searchViewModel;
+                var searchViewModel = new SearchViewModel()
+                {
+                    SearchTerm = searchText,
+                    Resources = resources.ToList()
+                };
+                mainViewModel.SearchViewModel = searchViewModel;
 
-            mainViewModel.Recent = _searchService.GetRecent(3)
-                .ToList()
-                .AsReadOnly();
+                mainViewModel.Recent = _searchService.GetRecent(3)
+                    .ToList()
+                    .AsReadOnly();
 
                 mainViewModel.SearchViewModel = searchViewModel;
             }
             else
             {
-                mainViewModel.SearchViewModel = new SearchViewModel();                
+                mainViewModel.SearchViewModel = new SearchViewModel();
             }
             return View(mainViewModel);
         }
